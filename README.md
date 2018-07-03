@@ -22,7 +22,7 @@ more information and sign up for an account [here](http://developer.avalara.com/
 
 The Avalara configuration screen can be reached from the Tax dashboard panel. Move the slider to the right to enable.
 
-![avalara-tax-panel](/assets/avalara-tax-panel.png)
+![avalara-tax-panel](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-panel.png)
 
 Once enabled you have a number of options to configure
 
@@ -85,7 +85,7 @@ to help you debug any issues you encounter. If you enabled transaction logging y
 that allows you to view the logs (which are in JSON format). Selecting an individual log record will allow you
 to see the entire record which you can copy and paste to send to Avalara support.
 
-![avalara-logging-panel](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-panel.png)
+![avalara-logging-panel](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-logging-panel.png)
 
 #### Retain Log Duration (days)
 
@@ -109,12 +109,10 @@ Once the configuration is complete you should see that the Product Detail Page (
 that has been pre-populated with Tax Codes from Avalara. You can also enter any tax code here. This is the tax code
 that will be used when the transaction is sent to Avalara.
 
-![avalara-tax-code-dropdown](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-logging-panel.png)
+![avalara-tax-code-dropdown](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-code-dropdown.png)
 
 ### Setting Tax Exemptions
 
 You can set `Tax Exemption No` and `Customer Usage Type` for individual accounts under the Accounts Management Screen.
 
-![avalara-tax-exempt-settings]((https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-logging-panel.png)
-
-
+![avalara-tax-exempt-settings]((https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-excempt.png)
