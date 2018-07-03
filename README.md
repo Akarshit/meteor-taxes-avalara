@@ -115,4 +115,4 @@ that will be used when the transaction is sent to Avalara.
 
 You can set `Tax Exemption No` and `Customer Usage Type` for individual accounts under the Accounts Management Screen.
 
-![avalara-tax-exempt-settings]((https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-excempt.png)
+![avalara-tax-exempt-settings]((https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-exempt.png)
