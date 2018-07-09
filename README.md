@@ -78,15 +78,6 @@ keep this as "Sandbox" and only switch to "Live" on your production servers.
 
 Whether you want to use the Avalara Tax API to calculate taxes on your carts and orders.
 
-#### Enable Transaction Logging
-
-If you experience issues while using the Avalara Tax API you may want to enable this to allow Avalara support
-to help you debug any issues you encounter. If you enabled transaction logging you will see an additional panel
-that allows you to view the logs (which are in JSON format). Selecting an individual log record will allow you
-to see the entire record which you can copy and paste to send to Avalara support.
-
-![avalara-logging-panel](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-logging-panel.png)
-
 #### Retain Log Duration (days)
 
 You should normally only enable transaction logging when you are experiencing some sort of problem. But when you
@@ -110,9 +101,3 @@ that has been pre-populated with Tax Codes from Avalara. You can also enter any 
 that will be used when the transaction is sent to Avalara.
 
 ![avalara-tax-code-dropdown](https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-code-dropdown.png)
-
-### Setting Tax Exemptions
-
-You can set `Tax Exemption No` and `Customer Usage Type` for individual accounts under the Accounts Management Screen.
-
-![avalara-tax-exempt-settings]((https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-exempt.png)
