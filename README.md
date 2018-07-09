@@ -22,11 +22,9 @@ more information and sign up for an account [here](http://developer.avalara.com/
 
 The Avalara configuration screen can be reached from the Tax dashboard panel. Move the slider to the right to enable.
 
-```
 <p align="center">
   <img width="260" src="https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-panel.png">
 </p>
-```
 
 Once enabled you have a number of options to configure
 
@@ -104,8 +102,6 @@ Once the configuration is complete you should see that the Product Detail Page (
 that has been pre-populated with Tax Codes from Avalara. You can also enter any tax code here. This is the tax code
 that will be used when the transaction is sent to Avalara.
 
-```
 <p align="center">
   <img width="300" src="https://raw.githubusercontent.com/reaction-contrib/meteor-taxes-avalara/master/images/avalara-tax-code-dropdown.png">
 </p>
-```
