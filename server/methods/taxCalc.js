@@ -1,4 +1,5 @@
 import os from "os";
+import moment from "moment";
 import Logger from "@reactioncommerce/logger";
 import _ from "lodash";
 import accounting from "accounting-js";
@@ -38,12 +39,6 @@ const ErrorObject = new SimpleSchema({
     optional: true
   }
 });
-
-let moment;
-async function lazyLoadMoment() {
-  if (moment) return;
-  moment = await import("moment");
-}
 
 const countriesWithRegions = ["US", "CA", "DE", "AU"];
 const requiredFields = ["username", "password", "apiLoginId", "companyCode", "shippingTaxCode"];
@@ -109,6 +104,7 @@ function getAuthData(packageData = taxCalc.getPackageData()) {
     const auth = `${username}:${password}`;
     return auth;
   }
+  return "";
 }
 
 /**
@@ -170,7 +166,7 @@ function parseError(error) {
   return errorData;
 }
 
-
+/* eslint-disable consistent-return */
 /**
  * @summary function to get HTTP data and pass in extra Avalara-specific headers
  * @param {String} requestUrl - The URL to make the request to
@@ -206,7 +202,7 @@ function avaGet(requestUrl, options = {}, testCredentials = true) {
     logObject.request = allOptions;
   }
 
-  let result;
+  let result = {};
   try {
     result = HTTP.get(requestUrl, allOptions);
   } catch (error) {
@@ -487,10 +483,9 @@ function cartToSalesOrder(cart) {
   const pkgData = taxCalc.getPackageData();
   const { companyCode, shippingTaxCode } = pkgData.settings.avalara;
   const company = Shops.findOne(Reaction.getShopId());
-  const companyShipping = _.filter(company.addressBook, (o) => o.isShippingDefault)[0];
+  const companyShipping = _.filter(company.addressBook, (address) => address.isShippingDefault)[0];
   const currencyCode = company.currency;
   const cartShipping = cart.getShippingTotal();
-  Promise.await(lazyLoadMoment());
   const cartDate = moment(cart.createdAt).format();
   let lineItems = [];
   if (cart.items) {
@@ -605,10 +600,9 @@ function orderToSalesInvoice(order) {
     documentType = "SalesOrder";
   }
   const company = Shops.findOne(Reaction.getShopId());
-  const companyShipping = _.filter(company.addressBook, (o) => o.isShippingDefault)[0];
+  const companyShipping = _.filter(company.addressBook, (address) => address.isShippingDefault)[0];
   const currencyCode = company.currency;
   const orderShipping = order.getShippingTotal();
-  Promise.await(lazyLoadMoment());
   const orderDate = moment(order.createdAt).format();
   const lineItems = order.items.reduce((items, item) => {
     if (item.variants.taxable) {
@@ -699,6 +693,7 @@ taxCalc.recordOrder = function (order, callback) {
       Logger.error(error);
     }
   }
+  return {};
 };
 
 /**
@@ -717,12 +712,11 @@ taxCalc.reportRefund = function (order, refundAmount, callback) {
   const pkgData = taxCalc.getPackageData();
   const { companyCode } = pkgData.settings.avalara;
   const company = Shops.findOne(Reaction.getShopId());
-  const companyShipping = _.filter(company.addressBook, (o) => o.isShippingDefault)[0];
+  const companyShipping = _.filter(company.addressBook, (address) => address.isShippingDefault)[0];
   const currencyCode = company.currency;
   const baseUrl = getUrl();
   const requestUrl = `${baseUrl}transactions/create`;
   const returnAmount = refundAmount * -1;
-  Promise.await(lazyLoadMoment());
   const orderDate = moment(order.createdAt);
   const refundDate = moment();
   const refundReference = `${order.cartId}:${refundDate}`;

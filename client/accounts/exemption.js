@@ -41,7 +41,7 @@ Template.taxSettingsPanel.helpers({
       label: entityCode.name,
       value: entityCode.code
     }));
-    entityCodeList = (entityCodes || []).map((a) => a.code);
+    entityCodeList = (entityCodes || []).map((entityCode) => entityCode.code);
     return (entityCodes || []).concat(customOption);
   }
 });
@@ -61,6 +61,7 @@ Template.taxSettingsPanel.events({
     }
 
     $(".customerUsageType").addClass("hide");
+    return true;
   }
 });
 
@@ -78,8 +79,10 @@ Template.taxSettingsPanel.onCreated(() => {
         return Alerts.toast(`${i18next.t("settings.apiError")} ${error.message}`, "error");
       }
       (entityCodes || []).forEach((entityCode) => TaxEntityCodes.insert(entityCode));
+      return true;
     });
   }
+  return true;
 });
 
 AutoForm.addHooks(null, {

@@ -1,15 +1,10 @@
+import moment from "moment";
 import Hooks from "@reactioncommerce/hooks";
 import Logger from "@reactioncommerce/logger";
 import { Meteor } from "meteor/meteor";
 import { Job } from "/imports/plugins/core/job-collection/lib";
 import { Jobs, Logs } from "/lib/collections";
 import taxCalc from "../methods/taxCalc";
-
-let moment;
-async function lazyLoadMoment() {
-  if (moment) return;
-  moment = await import("moment");
-}
 
 /**
  * @summary Remove logs older than the configured number of days
@@ -18,7 +13,6 @@ async function lazyLoadMoment() {
  * @private
  */
 function cleanupAvalaraJobs(callback) {
-  Promise.await(lazyLoadMoment());
   const pkgData = taxCalc.getPackageData();
   if (pkgData && pkgData.settings.avalara.enabled) {
     const saveDuration = pkgData.settings.avalara.logRetentionDuration;
@@ -33,6 +27,12 @@ function cleanupAvalaraJobs(callback) {
   callback();
 }
 
+/**
+ * @summary Remove logs older than the configured number of days
+ * @param {Function} callback - function to call when process complete
+ * @returns {Number} results of remmoval query
+ * @private
+ */
 export function setupAvalaraCleanupHook() {
   Hooks.Events.add("afterCoreInit", () => {
     if (!Meteor.isAppTest) {
@@ -51,6 +51,10 @@ export function setupAvalaraCleanupHook() {
   });
 }
 
+/**
+ * @summary Define the job to remove old Avalara logs
+ * @returns {undefined}
+ */
 export function cleanupAvalogs() {
   Jobs.processJobs(
     "logs/removeOldAvalaraLogs",

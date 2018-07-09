@@ -4,6 +4,12 @@ import MethodHooks from "/imports/plugins/core/core/server/method-hooks";
 import { Cart, Orders } from "/lib/collections";
 import taxCalc from "../methods/taxCalc";
 
+/**
+ * @method linesToTaxes
+ * @summary Extracts tax data from order lines
+ * @param {Array} lines - the order lines
+ * @returns {Array} tax data from order lines
+ */
 function linesToTaxes(lines) {
   const taxes = lines.map((line) => ({
     lineNumber: line.lineNumber,
@@ -21,13 +27,15 @@ function linesToTaxes(lines) {
  * @summary Calls the method accounts/markTaxCalculationFailed through Meteor.
  * @param {Boolean} value - the value to be set
  * @private
+ * @returns {Boolean} the input value
  */
 function markCartTax(value = true) {
   Meteor.call("accounts/markTaxCalculationFailed", value, (error) => {
     if (error) {
-      return Logger.error(error, "Unable to mark the cart");
+      Logger.error(error, "Unable to mark the cart");
     }
   });
+  return value;
 }
 
 

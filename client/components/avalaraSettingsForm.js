@@ -125,9 +125,10 @@ class AvalaraSettingsForm extends Component {
   }
 
   /**
-  * Shows the selected log in detail.
-  * @param  {Object} options
+  * @summary Shows the selected log in detail.
+  * @param  {Object} options object containing props
   * @memberof AvalaraSettingsForm
+  * @returns {undefined}
   */
   editRow = (options) => {
     const currentId = this.state.editingId;
