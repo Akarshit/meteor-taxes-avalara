@@ -3,42 +3,14 @@ import moment from "moment";
 import Logger from "@reactioncommerce/logger";
 import _ from "lodash";
 import accounting from "accounting-js";
-import SimpleSchema from "simpl-schema";
 import { Meteor } from "meteor/meteor";
 import { HTTP } from "meteor/http";
 import { check } from "meteor/check";
+import { ErrorObject } from "/lib/collections/schemas";
 import { Shops, Accounts } from "/lib/collections";
 import { TaxCodes } from "/imports/plugins/core/taxes/lib/collections";
 import Reaction from "/imports/plugins/core/core/server/Reaction";
 import Avalogger from "./avalogger";
-
-const errorDetails = new SimpleSchema({
-  message: {
-    type: String
-  },
-  description: {
-    type: String,
-    optional: true
-  }
-});
-
-// Validate that whenever we return an error, we return the same format
-const ErrorObject = new SimpleSchema({
-  "type": {
-    type: String
-  },
-  "errorCode": {
-    type: Number
-  },
-  "errorDetails": {
-    type: Array,
-    optional: true
-  },
-  "errorDetails.$": {
-    type: errorDetails,
-    optional: true
-  }
-});
 
 const countriesWithRegions = ["US", "CA", "DE", "AU"];
 const requiredFields = ["username", "password", "apiLoginId", "companyCode", "shippingTaxCode"];
@@ -302,7 +274,7 @@ taxCalc.getEntityCodes = function () {
     const requestUrl = `${baseUrl}definitions/entityusecodes`;
     const result = avaGet(requestUrl);
 
-    if (result && result.code === "ETIMEDOUT") {
+    if (result && result.error && result.error.errorCode === 503) {
       throw new Meteor.Error("request-timeout", "Request timed out while populating entity codes.");
     }
 
@@ -427,7 +399,7 @@ taxCalc.testCredentials = function (credentials, testCredentials = false) {
   const requestUrl = `${baseUrl}companies/${credentials.companyCode}/transactions`;
   const result = avaGet(requestUrl, { auth, timeout: credentials.requestTimeout }, testCredentials);
 
-  if (result && result.code === "ETIMEDOUT") {
+  if (result && result.error && result.error.errorCode === 503) {
     throw new Meteor.Error("request-timeout", "Request Timed out. Increase your timeout settings");
   }
 
